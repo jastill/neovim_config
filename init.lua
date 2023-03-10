@@ -82,14 +82,16 @@ packer.startup(function()
   use 'neovim/nvim-lspconfig'
   use 'nvim-lua/completion-nvim'
   use 'anott03/nvim-lspinstall'
-  use 'nvim-treesitter/nvim-treesitter'
+      use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
+    }
   use 'sheerun/vim-polyglot'
-  -- these are optional themes but I hear good things about gloombuddy ;)
-  use "EdenEast/terafox.nvim"
-  use "EdenEast/teratox.nvim"
-  
+  use "EdenEast/nightfox.nvim"
   use 'folke/tokyonight.nvim'
-  -- sneaking some formatting in here too
   use {'prettier/vim-prettier', run = 'yarn install' }
   end
 )
@@ -99,7 +101,7 @@ packer.startup(function()
 
 local configs = require'nvim-treesitter.configs'
 configs.setup {
-  --ensure_installed = "maintained",
+  ensure_installed = "all", -- "maintained|all"
   highlight = {
     enable = true,
   }
